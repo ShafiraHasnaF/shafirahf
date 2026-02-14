@@ -6,6 +6,7 @@
     --grid: hsl(0, 0%, 95%);
     --font-jersey: "Jersey 10", sans-serif;
     --font-quicksand: "Quicksand", sans-serif;
+    --font-anaheim: "Anaheim", sans-serif;;
     --shadow:rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
 
@@ -20,17 +21,43 @@
 *::after {
     box-sizing: border-box;
 }
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background: #989898;
+  border-radius: 10px;
+}
 
 body {
     background-color: var(--bg-dark);
     margin: 0;
-    font-family: var(--font-quicksand);
+    font-family: var(--font-anaheim);
 }
 
 .desktop {
     position: relative;
     height: 100vh;
     /* border: 2px solid red; */
+}
+
+/* easteregg */
+.visitor {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: var(--window);
+    font-family: var(--font-jersey);
+    letter-spacing: 2px;
+}
+#visitor-text::after {
+    content: "|";
+    margin-left: 5px;
+    animation: blink 1s infinite;
+}
+@keyframes blink {
+    0%, 50%, 100% { opacity: 1; }
+    25%, 75% { opacity: 0; }
 }
 
 .main-window {
@@ -125,6 +152,18 @@ body {
 }
 .grid-2 .sm-grid:nth-child(1) .header i{
     font-size: 18px;
+}
+.grid-2 .sm-grid:nth-child(2){
+   overflow: auto;
+}
+.grid-2 .sm-grid .main-content{
+    margin: 20px;
+}
+.grid-2 .main-content h4{
+    margin-bottom: 20px;
+}
+.grid-2 .main-content p{
+    margin-bottom: 10px;
 }
 
 /* grid3 */
