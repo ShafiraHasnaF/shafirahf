@@ -29,7 +29,11 @@ navItems.forEach(item => {
         sections.forEach(sections => {
             sections.classList.remove("active");
         })
+        navItems.forEach(nav => {
+            nav.classList.remove("active");
+        })
         document.getElementById(target).classList.add("active");
+        item.classList.add("active");
     });
 });
 
