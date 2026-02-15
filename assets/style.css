@@ -259,7 +259,7 @@ body {
 .content-section .tool-item p{
    margin: 0;
 }
-.tools-wrapper {
+.tools-wrapper { /*easteregg */
     position: relative;
     width: 100%;
     height: 100%;
@@ -275,6 +275,61 @@ body {
     position: absolute;
     margin: 0;
 } */
+.content-section .contact-wrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 20px;
+    width: max-content;
+}
+.content-section .contact-header{
+    padding-bottom: 15px;
+}
+.content-section .contact-header span{
+    font-size: 12px;
+}
+.content-section .contact-item{
+    display: inline-flex;  
+    align-items: center;
+    gap: 10px;
+    padding: 6px 12px;
+    background: #000;
+    color: var(--window);
+    font-size: 16px;
+    width: fit-content;
+    border: 1px solid #000;
+    border-width: 1px 3px 2px 1px;
+    box-shadow: inset -2px -2px 0 hsl(0, 0%, 75%);    
+}
+.content-section .contact-item:hover{
+    background: var(--bg-dark);
+    color: #fff;
+}
+.content-section .contact-item.instagram{
+    background: none;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+}
+.ig-item{
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    background: #000;
+    color: var(--window);
+    font-size: 16px;
+    width: fit-content;
+    border: 1px solid #000;
+    border-width: 1px 3px 2px 1px;
+    box-shadow: inset -2px -2px 0 #fff;
+}
+.ig-item:hover{
+    background: var(--bg-dark);
+    color: #fff;
+}
 
 /* grid3 */
 .grid-3{
