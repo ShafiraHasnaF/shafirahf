@@ -18,3 +18,15 @@ function mengetik() {
     }
 }
 mengetik();
+
+const navItems = document.querySelectorAll(".nav li");
+const sections = document.querySelectorAll(".content-section");
+navItems.forEach(item => {
+    item.addEventListener("click", () => {
+        const target = item.getAttribute("data-target");
+        sections.forEach(sections => {
+            sections.classList.remove("active");
+        })
+        document.getElementById(target).classList.add("active");
+    });
+});
