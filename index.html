@@ -24,12 +24,12 @@
 <body>
     <main class="desktop">
         <section class="copyright">
-            © 2026 Shafira Hasna Fauzi
+            © 2026 Shafira Hasna Fauzi <span class="desktop-txt">| Elements are draggable</span>
         </section>
         <section class="visitor">
             <p id="visitor-text"></p>
         </section>
-        <section class="main-window">
+        <section class="main-window draggable">
             <div class="layout-wrapper">
                 <div class="col left">
                     <!-- grid navigasi -->
@@ -59,17 +59,21 @@
                         <div class="sm-grid">
                             <div class="header">
                                 <i class="ri-add-box-line"></i>
-                                <p class="desktop-txt" style="user-select: none;">===================== Hello. Nice to meet you!
+                                <p class="desktop-txt" style="user-select: none;">===================== Hello. Nice to
+                                    meet you!
                                     =====================</p>
                                 <p class="mobile-txt" style="user-select: none;">Hello. Nice to meet you!
-                                    </p>
+                                </p>
                                 <i class="ri-add-box-line"></i>
                             </div>
                         </div>
                         <div class="sm-grid">
                             <div class="main-content">
                                 <section id="about" class="content-section active">
-                                    <h1 style="margin-bottom: 5px;">I'm Shafira Hasna Fauzi</h1>
+                                    <h1 class="name-trigger">
+                                         I'm Shafira Hasna Fauzi <!--<i class="ri-camera-line"></i> -->
+                                    </h1>
+                                    <br>
                                     <h4>Digital Illustrator | Junior Fullstack Web Developer</h4>
 
                                     <p>I build systems that are both logical and beautiful.</p>
@@ -375,7 +379,24 @@
                             </div>
                         </div>
                     </div>
-                    <div class="grid grid-4">4</div>
+                    <!-- grid feedback & last updated -->
+                    <div class="grid grid-4">
+                        <div class="grid-4-content">
+                            <div class="grid4-item feedback">
+                                <i class="ri-hand-heart-fill"></i>
+                                <p>feedback</p>
+                            </div>
+                            <div class="grid4-item l-right">
+                                <div class="last-updated">
+                                    <i class="ri-time-line"></i>
+                                    <p>Last updated : 17/02/2026</p>
+                                </div>
+                                <button class="btn-reset">
+                                    Reset 
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>

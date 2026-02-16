@@ -123,3 +123,50 @@ btn.addEventListener("click", () => {
         msg.style.display = "none";
     }
 });
+
+//draggavle window tampilan desktop only
+const draggableElements = document.querySelectorAll(".draggable");
+const tampilanDesktop = () => window.matchMedia("(min-width: 769px)").matches;
+
+draggableElements.forEach((win) => {
+    let dragging = false;
+    let posisiX = 0;
+    let posisiY = 0;
+    let isMoving = false;
+    const initX = (e) => e.touches ? e.touches[0].clientX : e.clientX;
+    const initY = (e) => e.touches ? e.touches[0].clientY : e.clientY;
+
+    function startDrag(e) {
+        if (!tampilanDesktop()) return;
+        const rect = win.getBoundingClientRect();
+        if (!isMoving) {
+            win.style.transform = "none";
+            win.style.left = rect.left + "px";
+            win.style.top  = rect.top + "px";
+            isMoving = true;
+        }
+        posisiX = initX(e) - rect.left;
+        posisiY = initY(e) - rect.top;
+        dragging = true;
+        document.addEventListener("mousemove", drag);
+        document.addEventListener("mouseup", stopDrag);
+    }
+    function drag(e) {
+        if (!dragging) return;
+        let newLeft = initX(e) - posisiX;
+        let newTop  = initY(e) - posisiY;
+
+        const maxX = window.innerWidth - win.offsetWidth;
+        const maxY = window.innerHeight - win.offsetHeight;
+        newLeft = Math.max(0, Math.min(newLeft, maxX));
+        newTop  = Math.max(0, Math.min(newTop, maxY));
+        win.style.left = newLeft + "px";
+        win.style.top  = newTop + "px";
+    }
+    function stopDrag() {
+        dragging = false;
+        document.removeEventListener("mousemove", drag);
+        document.removeEventListener("mouseup", stopDrag);
+    }
+    win.addEventListener("mousedown", startDrag);
+});
