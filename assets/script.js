@@ -133,6 +133,13 @@ let zIdx = 1000;
 
 function showModal({ imgSrc, width = 600, title = "Preview" }) {
     if (!imgSrc) return;
+    const sudahBuka = showWindows.find(win => win.dataset.key === imgSrc);
+    if (sudahBuka) {
+        zIdx++;
+        sudahBuka.style.zindex = zIdx;
+        console.log("cek modal sudah dibuka")
+        return;
+    }
     if (!tampilanDesktop()) {
         layerModal.innerHTML = "";
         showWindows = [];
@@ -149,6 +156,7 @@ function showModal({ imgSrc, width = 600, title = "Preview" }) {
     img.src = imgSrc;
     titleEl.textContent = title;
     windowModal.style.width = width + "px";
+    windowModal.dataset.key = imgSrc;
 
     zIdx++;
     windowModal.style.zIndex = zIdx;
@@ -165,14 +173,13 @@ function showModal({ imgSrc, width = 600, title = "Preview" }) {
     closeBtn(windowCreated);
 }
 function randomPosition(win) {
-    const desktop = document.querySelector(".desktop");
-    const maxX = desktop.clientWidth - win.offsetWidth;
-    const maxY = desktop.clientHeight - win.offsetHeight;
+    const container = layerModal;
+    const maxX = container.clientWidth - win.offsetWidth;
+    const maxY = container.clientHeight - win.offsetHeight;
     const randomX = Math.max(0, Math.random() * maxX);
     const randomY = Math.max(0, Math.random() * maxY);
-
     win.style.left = randomX + "px";
-    win.style.top = randomY + "px";
+    win.style.top  = randomY + "px";
 }
 function centerMobile(win) {
     win.style.left = "50%";
@@ -190,7 +197,7 @@ function closeBtn(win) {
     });
 }
 function draggable(win, handleSelector = null, useZIndex = true) {
-    const desktop = document.querySelector(".desktop");
+    const desktop = layerModal;
     const handle = handleSelector ? win.querySelector(handleSelector) : win;
     if (!handle) return;
 
@@ -231,12 +238,14 @@ function draggable(win, handleSelector = null, useZIndex = true) {
         dragging = false;
     });
 }
-// init mainwindow
+
 document.addEventListener("DOMContentLoaded", () => {
-    const mainWindow = document.querySelector(".main-window");
-    if (mainWindow && tampilanDesktop()) {
-        draggable(mainWindow, null, false);
-    }
+    // init mainwindow
+    // gajadi
+    // const mainWindow = document.querySelector(".main-window");
+    // if (mainWindow && tampilanDesktop()) {
+    //     draggable(mainWindow, null, false);
+    // }
     document.querySelectorAll(".zoom-icon").forEach(icon => {
         icon.addEventListener("click", () => {
             const expItem = icon.closest(".exp-item");
