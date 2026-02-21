@@ -124,97 +124,128 @@ btn.addEventListener("click", () => {
     }
 });
 
-//draggavle window tampilan desktop only
-// document.addEventListener("DOMContentLoaded", () => {
-//     const draggableElements = document.querySelectorAll(".draggable");
-//     const tampilanDesktop = () => window.matchMedia("(min-width: 769px)").matches;
+// STRESS DRAGGABLE ASDKJADKJSA
+const layerModal = document.getElementById("modalLayer");
+const template = document.getElementById("modalTemplate");
+const tampilanDesktop = () => window.matchMedia("(min-width: 769px)").matches;
+let showWindows = [];
+let zIdx = 1000;
 
-//     draggableElements.forEach((win) => {
-//         let dragging = false;
-//         let posisiX = 0;
-//         let posisiY = 0;
-//         let isMoving = false;
-//         const initX = (e) => e.touches ? e.touches[0].clientX : e.clientX;
-//         const initY = (e) => e.touches ? e.touches[0].clientY : e.clientY;
-
-//         function startDrag(e) {
-//             if (!tampilanDesktop()) return;
-//             const rect = win.getBoundingClientRect();
-//             if (!isMoving) {
-//                 win.style.transform = "none";
-//                 win.style.left = rect.left + "px";
-//                 win.style.top = rect.top + "px";
-//                 isMoving = true;
-//             }
-//             posisiX = initX(e) - rect.left;
-//             posisiY = initY(e) - rect.top;
-//             dragging = true;
-//             document.addEventListener("mousemove", drag);
-//             document.addEventListener("mouseup", stopDrag);
-//         }
-//         function drag(e) {
-//             if (!dragging) return;
-//             let newLeft = initX(e) - posisiX;
-//             let newTop = initY(e) - posisiY;
-
-//             const maxX = window.innerWidth - win.offsetWidth;
-//             const maxY = window.innerHeight - win.offsetHeight;
-//             newLeft = Math.max(0, Math.min(newLeft, maxX));
-//             newTop = Math.max(0, Math.min(newTop, maxY));
-//             win.style.left = newLeft + "px";
-//             win.style.top = newTop + "px";
-//         }
-//         function stopDrag() {
-//             dragging = false;
-//             document.removeEventListener("mousemove", drag);
-//             document.removeEventListener("mouseup", stopDrag);
-//         }
-//         win.addEventListener("mousedown", startDrag);
-//     });
-// });
-
-//modal 1 utk semua
-const modal = document.getElementById("globalModal");
-const modalWindow = modal.querySelector(".modal-window");
-const modalImg = modal.querySelector(".modal-body img");
-const modalTitle = modal.querySelector(".modal-title");
-const closeBtn = modal.querySelector(".modal-close");
-
-function openModal({ imgSrc, width = 600, height = "auto", title = "Preview" }) {
+function showModal({ imgSrc, width = 600, title = "Preview" }) {
     if (!imgSrc) return;
-    console.log(imgSrc);
-    modalImg.src = imgSrc;
-    modalTitle.textContent = title;
-    modalWindow.style.width = width + "px";
-    modalWindow.style.height = height === "auto" ? "auto" : height + "px";
-    modal.classList.add("show");
-}
-
-function closeModal() {
-    modal.classList.remove("show");
-    modalImg.src = "";
-}
-closeBtn.addEventListener("click", closeModal);
-modal.addEventListener("click", (e) => {
-    if (e.target === modal) {
-        closeModal();
+    if (!tampilanDesktop()) {
+        layerModal.innerHTML = "";
+        showWindows = [];
     }
-});
+    if (tampilanDesktop() && showWindows.length >= 2) {
+        const oldest = showWindows.shift();
+        oldest.remove();
+    }
 
+    const clone = template.content.cloneNode(true);
+    const windowModal = clone.querySelector(".modal-window");
+    const img = clone.querySelector("img");
+    const titleEl = clone.querySelector(".modal-title");
+    img.src = imgSrc;
+    titleEl.textContent = title;
+    windowModal.style.width = width + "px";
+
+    zIdx++;
+    windowModal.style.zIndex = zIdx;
+    layerModal.appendChild(clone);
+
+    const windowCreated = layerModal.lastElementChild;
+    showWindows.push(windowCreated);
+    if (tampilanDesktop()) {
+        randomPosition(windowCreated);
+        draggable(windowCreated, ".modal-header", true);
+    } else {
+        centerMobile(windowCreated);
+    }
+    closeBtn(windowCreated);
+}
+function randomPosition(win) {
+    const desktop = document.querySelector(".desktop");
+    const maxX = desktop.clientWidth - win.offsetWidth;
+    const maxY = desktop.clientHeight - win.offsetHeight;
+    const randomX = Math.max(0, Math.random() * maxX);
+    const randomY = Math.max(0, Math.random() * maxY);
+
+    win.style.left = randomX + "px";
+    win.style.top = randomY + "px";
+}
+function centerMobile(win) {
+    win.style.left = "50%";
+    win.style.top = "50%";
+    win.style.transform = "translate(-50%, -50%)";
+    win.style.width = "90vw";
+}
+function closeBtn(win) {
+    const btn = win.querySelector(".modal-close");
+    if (!btn) return;
+
+    btn.addEventListener("click", () => {
+        win.remove();
+        showWindows = showWindows.filter(w => w !== win);
+    });
+}
+function draggable(win, handleSelector = null, useZIndex = true) {
+    const desktop = document.querySelector(".desktop");
+    const handle = handleSelector ? win.querySelector(handleSelector) : win;
+    if (!handle) return;
+
+    let dragging = false;
+    let posisiX = 0;
+    let posisiY = 0;
+
+    handle.addEventListener("mousedown", (e) => {
+        dragging = true;
+        const rect = win.getBoundingClientRect();
+        const desktopRect = desktop.getBoundingClientRect();
+
+        posisiX = e.clientX - rect.left;
+        posisiY = e.clientY - rect.top;
+        if (useZIndex) {
+            zIdx++;
+            win.style.zIndex = zIdx;
+        }
+        win.style.left = rect.left - desktopRect.left + "px";
+        win.style.top  = rect.top  - desktopRect.top  + "px";
+        win.style.transform = "none";
+    });
+    document.addEventListener("mousemove", (e) => {
+        if (!dragging) return;
+        const desktopRect = desktop.getBoundingClientRect();
+        let newLeft = e.clientX - desktopRect.left - posisiX;
+        let newTop  = e.clientY - desktopRect.top  - posisiY;
+        const maxX = desktop.clientWidth - win.offsetWidth;
+        const maxY = desktop.clientHeight - win.offsetHeight;
+
+        newLeft = Math.max(0, Math.min(newLeft, maxX));
+        newTop  = Math.max(0, Math.min(newTop, maxY));
+        win.style.left = newLeft + "px";
+        win.style.top  = newTop + "px";
+    });
+
+    document.addEventListener("mouseup", () => {
+        dragging = false;
+    });
+}
+// init mainwindow
 document.addEventListener("DOMContentLoaded", () => {
+    const mainWindow = document.querySelector(".main-window");
+    if (mainWindow && tampilanDesktop()) {
+        draggable(mainWindow, null, false);
+    }
     document.querySelectorAll(".zoom-icon").forEach(icon => {
         icon.addEventListener("click", () => {
             const expItem = icon.closest(".exp-item");
             if (!expItem) return;
-            const imgSrc = expItem.dataset.img;
-            const imgTitle = expItem.dataset.title;
-            const width = expItem.dataset.width || 600;
-            openModal({
-                imgSrc: imgSrc,
-                width: Number(width),
-                height: "auto",
-                title: imgTitle
+            showModal({
+                imgSrc: expItem.dataset.img,
+                width: Number(expItem.dataset.width || 600),
+                title: expItem.dataset.title
             });
         });
     });
-});
+}); 

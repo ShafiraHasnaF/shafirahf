@@ -127,8 +127,8 @@
 
                                             <div class="exp-wrapper">
                                                 <div class="exp-item" data-img="/assets/img/file/cert_viovera.jpg"
-                                                    data-width="380" data-title="PT. Berkat Inti Guna Internship Certification">
-                                                    <h4>PT. Berkat Inti Guna <i class="ri-zoom-in-line zoom-icon"></i>
+                                                    data-width="300" data-title="PT. Berkat Inti Guna Internship Certification">
+                                                    <h4>PT. Viovera Marli Sejahtera <i class="ri-zoom-in-line zoom-icon"></i>
                                                     </h4>
                                                     <span class="exp-role">Web Developer & Social Media Content
                                                         Creator</span>
@@ -404,20 +404,23 @@
             </div>
         </section>
 
-    </main>
+        <!-- global modal, otw draggable -->
+        <template id="modalTemplate">
+            <div class="modal-window">
+                <div class="modal-header">
+                    <span class="modal-title"></span>
+                    <button class="modal-close">
+                        <i class="ri-close-circle-fill"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <img src="" alt="preview"/>
+                </div>
+            </div>
+        </template>
 
-    <!-- global modal, otw draggable -->
-    <div class="modal" id="globalModal">
-        <div class="modal-window">
-            <div class="modal-header">
-                <span class="modal-title"></span>
-                <button class="modal-close"><i class="ri-close-circle-fill"></i></button>
-            </div>
-            <div class="modal-body">
-                <img src="" alt="preview"/>
-            </div>
-        </div>
-    </div>
+        <div class="modal" id="modalLayer"></div>
+    </main>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
     <script src="./assets/script.js"></script>

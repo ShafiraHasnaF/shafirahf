@@ -115,6 +115,7 @@ body {
     grid-template-columns: 15% 85%;
     /* grid-template-rows: 70% 30%; */
     user-select: none;
+    z-index: 1;
 }
 
 .left {
@@ -662,23 +663,23 @@ body {
 
 /* modal */
 .modal {
-    position: fixed;
+    position: absolute;
     inset: 0;
     pointer-events: none;
     z-index: 999;
 }
-.modal.show {
+/* .modal.show {
     display: block;
-}
+} */
 .modal-window {
     background: var(--window-1);
     border: 1px solid #000;
     border-width: 1px 3px 3px 2px;
     position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
     pointer-events: auto;
+    /* left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%); */
 }
 .modal-header {
     display: flex;
@@ -688,7 +689,6 @@ body {
     border-bottom: 3px solid #000;
     box-shadow: inset -2px -2px 0 #fff;
     user-select: none;
-    cursor: move;
 }
 .modal-header .modal-title{
     /* font-family: var(--font-jersey); */
