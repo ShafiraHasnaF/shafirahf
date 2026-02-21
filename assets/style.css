@@ -734,6 +734,52 @@ body {
     border-width: 1px 2px 2px 1px;
 }
 
+/* fromdeedback */
+.feedback-form {
+    padding: 15px;
+    min-width: 300px;
+}
+.form-group {
+    margin-bottom: 20px;
+}
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 0.9em;
+}
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 8px;
+    border: 2px solid #000;
+    border-width: 2px 2px 3px 2px;
+    background: white;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+.form-group input[readonly] {
+    background: #f0f0f0;
+    font-weight: bold;
+    user-select: none;  
+}
+.btn-send {
+    background: var(--window);
+    border: 2px solid #000;
+    border-width: 2px 3px 3px 2px;
+    padding: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+.btn-send:active {
+    border-width: 3px 2px 2px 3px;
+}
+
 /* layout hp ==========================================================================================================================================*/
 .layout-wrapper {
     display: contents;

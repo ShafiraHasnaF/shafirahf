@@ -126,7 +126,7 @@ btn.addEventListener("click", () => {
 
 // STRESS DRAGGABLE ASDKJADKJSA
 const layerModal = document.getElementById("modalLayer");
-const template = document.getElementById("modalTemplate");
+const templateFeedback = document.getElementById("modalTemplate");
 const tampilanDesktop = () => window.matchMedia("(min-width: 769px)").matches;
 let showWindows = [];
 let zIdx = 1000;
@@ -149,7 +149,7 @@ function showModal({ imgSrc, width = 600, title = "Preview" }) {
         oldest.remove();
     }
 
-    const clone = template.content.cloneNode(true);
+    const clone = templateFeedback.content.cloneNode(true);
     const windowModal = clone.querySelector(".modal-window");
     const img = clone.querySelector("img");
     const titleEl = clone.querySelector(".modal-title");
@@ -184,7 +184,6 @@ function showModal({ imgSrc, width = 600, title = "Preview" }) {
     closeBtn(windowCreated);
 }
 let lastCorner = null;
-
 function randomPosition(win) {
     const container = layerModal;
     const pojok = [
@@ -279,4 +278,117 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
     });
+
+    // btn feedback
+    const feedbackBtn = document.querySelector(".feedback");
+    if (feedbackBtn) {
+        feedbackBtn.addEventListener("click", showFeedbackModal);
+    }
 }); 
+
+//isi form feedback
+const randomNames = [
+    "Hungry Mammoth",
+    "Moldy Rice", 
+    "Rotten Egg",
+    "Cute Duck",
+    "Sleepy Sloth",
+    "Crazy Cat",
+    "Lazy Dog",
+    "Spicy Chili",
+    "Sour Candy",
+    "Burnt Toast",
+    "Calico Cat",
+    "Expired Candy",
+    "Stinky Cookie",
+    "Crying Banana",
+    "Rainbow Donught"
+];
+const urlsheetbest = "https://api.sheetbest.com/sheets/62266709-66e1-47c5-b91b-c13e6f177d61";
+function showFeedbackModal() {
+    const templateFeedback = document.getElementById("feedbackTemplate");
+    const clone = templateFeedback.content.cloneNode(true);
+    const windowModal = clone.querySelector(".modal-window");
+
+    const randomName = randomNames[Math.floor(Math.random() * randomNames.length)];
+    const sender = clone.querySelector(".random-name");
+    if (sender) sender.value = randomName;
+    
+    const closeBtn = clone.querySelector(".modal-close");
+    closeBtn.addEventListener("click", () => {
+        windowModal.remove();
+        showWindows = showWindows.filter(w => w !== windowModal);
+    });
+    
+    // modal spawn dulu -> cari eleemen
+    zIdx++;
+    windowModal.style.zIndex = zIdx;
+    layerModal.appendChild(clone);
+    const windowCreated = layerModal.lastElementChild;
+    showWindows.push(windowCreated);
+    const btnSend = windowCreated.querySelector("#sendFeedback");
+    const feedbackMsg = windowCreated.querySelector(".feedback-message");
+    const namaSender = windowCreated.querySelector(".random-name");
+    
+    console.log("btn send:", btnSend);
+    console.log("pesan:", feedbackMsg);
+    console.log("sender:", namaSender);
+    if (!btnSend || !feedbackMsg) {
+        console.error("hilang");
+        return;
+    }
+    
+    btnSend.addEventListener("click", function(event) {
+        event.preventDefault();
+        const message = feedbackMsg.value;
+        const fromSender = namaSender ? namaSender.value : "Unknown Duck";
+        if (!message.trim()) {
+            alert("message field empty...");
+            return;
+        }
+        
+        fetch(urlsheetbest, {
+            method: "POST",
+            mode: "cors",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify([{
+                from: fromSender,
+                message: message,
+                timestamp: new Date().toLocaleString('id-ID')
+            }])
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("jos:", data);
+            const responses = [
+                "delivered. thank u!",
+                "done! time to grab a coffee...",
+                "message sent! go touch some grass now ;D",
+                "thanks, stranger!",
+            ];
+            alert(responses[Math.floor(Math.random() * responses.length)]);
+            windowCreated.remove();
+            showWindows = showWindows.filter(w => w !== windowCreated);
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            const errorMessages = [
+                "fira's sleeping, try again later...",
+                "wild moldy rice ate your message, please retry...",
+                "fira's in another dimension, try again...",
+                "spicy chili burned the server, please retry..."
+            ];
+            alert(errorMessages[Math.floor(Math.random()*errorMessages.length)]);
+        });
+    });
+    if (tampilanDesktop()) {
+        randomPosition(windowCreated);
+        windowCreated.classList.add('modal-visible');
+        draggable(windowCreated, ".modal-header", true);
+    } else {
+        centerMobile(windowCreated);
+        windowCreated.classList.add('modal-visible');
+    }
+}
