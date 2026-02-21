@@ -180,7 +180,8 @@ body {
     background-color: var(--window-2);
     border-width: 1px 3px 2px 1px;
 }
-.grid-2 .name-trigger{
+
+.grid-2 .name-trigger {
     cursor: pointer;
     display: inline-block;
     margin-bottom: 5px !important;
@@ -188,10 +189,12 @@ body {
     text-decoration-thickness: 2px;
     text-underline-offset: 5px;
 }
-.grid-2 .name-trigger i{
+
+.grid-2 .name-trigger i {
     font-size: 20px;
     color: #555;
 }
+
 .grid-2 .header .mobile-txt {
     display: none;
 }
@@ -591,19 +594,22 @@ body {
     border-width: 1px 2px 3px 1px;
     background-color: var(--grid);
 }
-.grid-4-content{
+
+.grid-4-content {
     position: relative;
     display: flex;
     flex-direction: row;
     gap: 9em;
     margin: 6px;
 }
-.l-right{
+
+.l-right {
     background-color: transparent !important;
     border: none !important;
     box-shadow: none !important;
 }
-.grid4-item{
+
+.grid4-item {
     background-color: var(--window);
     border: 1px solid #000;
     border-width: 1px 3px 2px 1px;
@@ -613,35 +619,99 @@ body {
     align-items: center;
     flex-direction: column;
 }
+
 .grid4-item:first-child {
-    flex: 0 0 90px;   
+    flex: 0 0 90px;
 }
+
 .grid4-item:last-child {
-    flex: 1;         
-    min-width: 0;  
+    flex: 1;
+    min-width: 0;
     flex-direction: row;
-    gap: 2em; 
+    gap: 2em;
 }
-.feedback i{
+
+.feedback i {
     font-size: 1.7em;
     color: #000000;
-}   
-.feedback p{
+}
+
+.feedback p {
     font-size: 12px;
 }
-.last-updated{
+
+.feedback:hover {
+    background-color: hsl(0, 0%, 61%);
+}
+
+.last-updated {
     display: flex;
     gap: 4px;
     align-items: center;
     font-size: 1.3em;
     font-family: var(--font-jersey);
     letter-spacing: 1px;
-}  
-.grid4-item button{
+}
+
+.grid4-item button {
     padding: 10px 20px;
     background-color: #000000;
-    color: var(--window);   
+    color: var(--window);
     box-shadow: inset -2px -2px 0 hsl(0, 0%, 84%);
+}
+
+/* modal */
+.modal {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 999;
+}
+.modal.show {
+    display: block;
+}
+.modal-window {
+    background: var(--window-1);
+    border: 1px solid #000;
+    border-width: 1px 3px 3px 2px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: auto;
+}
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px;
+    background: var(--window);
+    border-bottom: 3px solid #000;
+    box-shadow: inset -2px -2px 0 #fff;
+    user-select: none;
+    cursor: move;
+}
+.modal-header .modal-title{
+    /* font-family: var(--font-jersey); */
+    /* letter-spacing: 1px; */
+    font-size: 0.9em;
+    font-weight: 700;
+    align-content: center;
+}
+.modal-body {
+    padding: 10px;
+    background-color: var(--window-2);
+    box-shadow: inset -2px -2px 0 #fff;
+}
+.modal-body img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+.modal-close{
+    aspect-ratio: 1/1;
+    padding: 0 3px;
+    border: 1px solid #000;
+    border-width: 1px 2px 2px 1px;
 }
 
 /* layout hp ==========================================================================================================================================*/
@@ -706,7 +776,7 @@ body {
         border: none;
         box-shadow: none;
         border-bottom: none;
-         padding-left: 5px;
+        padding-left: 5px;
     }
 
     .grid-1 .nav li i {
@@ -772,6 +842,43 @@ body {
         grid-column: 2;
         grid-row: 3;
         overflow: hidden;
+    }
+
+    .grid-4-content {
+        flex-direction: row-reverse;
+        height: 48px;
+        gap: 0.5em;
+        margin: 5px;
+    }
+    .last-updated i{
+        display: none;
+    }
+    .feedback i {
+        font-size: 1.5em;
+        color: #000000;
+    }
+    
+
+    .last-updated {
+        align-items: center;
+        font-size: 1em;
+        font-family: var(--font-jersey);
+        letter-spacing: 1px;
+    }
+    .grid4-item button {
+        display: none;
+    }
+    .modal {
+        position: absolute;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 999;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.6);
+    }
+    .modal-window{
+        margin: 20px;
     }
 }
 

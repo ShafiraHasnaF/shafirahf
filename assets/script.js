@@ -125,48 +125,96 @@ btn.addEventListener("click", () => {
 });
 
 //draggavle window tampilan desktop only
-const draggableElements = document.querySelectorAll(".draggable");
-const tampilanDesktop = () => window.matchMedia("(min-width: 769px)").matches;
+// document.addEventListener("DOMContentLoaded", () => {
+//     const draggableElements = document.querySelectorAll(".draggable");
+//     const tampilanDesktop = () => window.matchMedia("(min-width: 769px)").matches;
 
-draggableElements.forEach((win) => {
-    let dragging = false;
-    let posisiX = 0;
-    let posisiY = 0;
-    let isMoving = false;
-    const initX = (e) => e.touches ? e.touches[0].clientX : e.clientX;
-    const initY = (e) => e.touches ? e.touches[0].clientY : e.clientY;
+//     draggableElements.forEach((win) => {
+//         let dragging = false;
+//         let posisiX = 0;
+//         let posisiY = 0;
+//         let isMoving = false;
+//         const initX = (e) => e.touches ? e.touches[0].clientX : e.clientX;
+//         const initY = (e) => e.touches ? e.touches[0].clientY : e.clientY;
 
-    function startDrag(e) {
-        if (!tampilanDesktop()) return;
-        const rect = win.getBoundingClientRect();
-        if (!isMoving) {
-            win.style.transform = "none";
-            win.style.left = rect.left + "px";
-            win.style.top  = rect.top + "px";
-            isMoving = true;
-        }
-        posisiX = initX(e) - rect.left;
-        posisiY = initY(e) - rect.top;
-        dragging = true;
-        document.addEventListener("mousemove", drag);
-        document.addEventListener("mouseup", stopDrag);
-    }
-    function drag(e) {
-        if (!dragging) return;
-        let newLeft = initX(e) - posisiX;
-        let newTop  = initY(e) - posisiY;
+//         function startDrag(e) {
+//             if (!tampilanDesktop()) return;
+//             const rect = win.getBoundingClientRect();
+//             if (!isMoving) {
+//                 win.style.transform = "none";
+//                 win.style.left = rect.left + "px";
+//                 win.style.top = rect.top + "px";
+//                 isMoving = true;
+//             }
+//             posisiX = initX(e) - rect.left;
+//             posisiY = initY(e) - rect.top;
+//             dragging = true;
+//             document.addEventListener("mousemove", drag);
+//             document.addEventListener("mouseup", stopDrag);
+//         }
+//         function drag(e) {
+//             if (!dragging) return;
+//             let newLeft = initX(e) - posisiX;
+//             let newTop = initY(e) - posisiY;
 
-        const maxX = window.innerWidth - win.offsetWidth;
-        const maxY = window.innerHeight - win.offsetHeight;
-        newLeft = Math.max(0, Math.min(newLeft, maxX));
-        newTop  = Math.max(0, Math.min(newTop, maxY));
-        win.style.left = newLeft + "px";
-        win.style.top  = newTop + "px";
+//             const maxX = window.innerWidth - win.offsetWidth;
+//             const maxY = window.innerHeight - win.offsetHeight;
+//             newLeft = Math.max(0, Math.min(newLeft, maxX));
+//             newTop = Math.max(0, Math.min(newTop, maxY));
+//             win.style.left = newLeft + "px";
+//             win.style.top = newTop + "px";
+//         }
+//         function stopDrag() {
+//             dragging = false;
+//             document.removeEventListener("mousemove", drag);
+//             document.removeEventListener("mouseup", stopDrag);
+//         }
+//         win.addEventListener("mousedown", startDrag);
+//     });
+// });
+
+//modal 1 utk semua
+const modal = document.getElementById("globalModal");
+const modalWindow = modal.querySelector(".modal-window");
+const modalImg = modal.querySelector(".modal-body img");
+const modalTitle = modal.querySelector(".modal-title");
+const closeBtn = modal.querySelector(".modal-close");
+
+function openModal({ imgSrc, width = 600, height = "auto", title = "Preview" }) {
+    if (!imgSrc) return;
+    console.log(imgSrc);
+    modalImg.src = imgSrc;
+    modalTitle.textContent = title;
+    modalWindow.style.width = width + "px";
+    modalWindow.style.height = height === "auto" ? "auto" : height + "px";
+    modal.classList.add("show");
+}
+
+function closeModal() {
+    modal.classList.remove("show");
+    modalImg.src = "";
+}
+closeBtn.addEventListener("click", closeModal);
+modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+        closeModal();
     }
-    function stopDrag() {
-        dragging = false;
-        document.removeEventListener("mousemove", drag);
-        document.removeEventListener("mouseup", stopDrag);
-    }
-    win.addEventListener("mousedown", startDrag);
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".zoom-icon").forEach(icon => {
+        icon.addEventListener("click", () => {
+            const expItem = icon.closest(".exp-item");
+            if (!expItem) return;
+            const imgSrc = expItem.dataset.img;
+            const imgTitle = expItem.dataset.title;
+            const width = expItem.dataset.width || 600;
+            openModal({
+                imgSrc: imgSrc,
+                width: Number(width),
+                height: "auto",
+                title: imgTitle
+            });
+        });
+    });
 });
