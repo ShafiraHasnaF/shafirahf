@@ -306,9 +306,17 @@ const randomNames = [
 ];
 const urlsheetbest = "https://api.sheetbest.com/sheets/62266709-66e1-47c5-b91b-c13e6f177d61";
 function showFeedbackModal() {
+    const feedbackSudahBuka = showWindows.find(win => win.classList.contains("feedback-modal"));
+    if (feedbackSudahBuka) {
+        zIdx++;
+        feedbackSudahBuka.style.zIndex = zIdx;
+        console.log("cek modal sudah dibuka");
+        return;
+    }
     const templateFeedback = document.getElementById("feedbackTemplate");
     const clone = templateFeedback.content.cloneNode(true);
     const windowModal = clone.querySelector(".modal-window");
+    windowModal.classList.add("feedback-modal");
 
     const randomName = randomNames[Math.floor(Math.random() * randomNames.length)];
     const sender = clone.querySelector(".random-name");
@@ -329,6 +337,7 @@ function showFeedbackModal() {
     const btnSend = windowCreated.querySelector("#sendFeedback");
     const feedbackMsg = windowCreated.querySelector(".feedback-message");
     const namaSender = windowCreated.querySelector(".random-name");
+    windowCreated.querySelector(".feedback-message")?.focus();
     
     console.log("btn send:", btnSend);
     console.log("pesan:", feedbackMsg);
@@ -341,12 +350,15 @@ function showFeedbackModal() {
     btnSend.addEventListener("click", function(event) {
         event.preventDefault();
         const message = feedbackMsg.value;
-        const fromSender = namaSender ? namaSender.value : "Unknown Duck";
+        const fromSender = namaSender ? namaSender.value : "anonymous";
         if (!message.trim()) {
             alert("message field empty...");
             return;
         }
-        
+        btnSend.disabled = true;
+        const textAwal = btnSend.innerHTML;
+        btnSend.innerHTML = 'Sending <i class="ri-loader-4-line"></i>';
+
         fetch(urlsheetbest, {
             method: "POST",
             mode: "cors",
@@ -381,10 +393,22 @@ function showFeedbackModal() {
                 "spicy chili burned the server, please retry..."
             ];
             alert(errorMessages[Math.floor(Math.random()*errorMessages.length)]);
-        });
+        })
+        .finally(() => {
+            btnSend.disabled = false;
+            btnSend.innerHTML = textAwal;
+        })
     });
     if (tampilanDesktop()) {
-        randomPosition(windowCreated);
+        // randomPosition(windowCreated);
+
+        const container = layerModal;
+        const posisiKiri = (container.clientWidth / 2) - (windowCreated.offsetWidth / 2);
+        const posisiAtas = (container.clientHeight / 2) - (windowCreated.offsetHeight / 2);
+        windowCreated.style.left = Math.max(0, posisiKiri) + "px";
+        windowCreated.style.top = Math.max(0, posisiAtas) + "px";
+        windowCreated.style.transform = "none";
+
         windowCreated.classList.add('modal-visible');
         draggable(windowCreated, ".modal-header", true);
     } else {

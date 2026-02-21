@@ -737,7 +737,7 @@ body {
 /* fromdeedback */
 .feedback-form {
     padding: 15px;
-    min-width: 300px;
+    min-width: 350px;
 }
 .form-group {
     margin-bottom: 20px;
@@ -778,6 +778,10 @@ body {
 }
 .btn-send:active {
     border-width: 3px 2px 2px 3px;
+}
+.btn-send:disabled {
+    background: var(--window-2);
+    cursor: not-allowed;
 }
 
 /* layout hp ==========================================================================================================================================*/
