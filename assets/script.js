@@ -136,7 +136,7 @@ function showModal({ imgSrc, width = 600, title = "Preview" }) {
     const sudahBuka = showWindows.find(win => win.dataset.key === imgSrc);
     if (sudahBuka) {
         zIdx++;
-        sudahBuka.style.zindex = zIdx;
+        sudahBuka.style.zIndex = zIdx;
         console.log("cek modal sudah dibuka")
         return;
     }
@@ -165,10 +165,21 @@ function showModal({ imgSrc, width = 600, title = "Preview" }) {
     const windowCreated = layerModal.lastElementChild;
     showWindows.push(windowCreated);
     if (tampilanDesktop()) {
-        randomPosition(windowCreated);
-        draggable(windowCreated, ".modal-header", true);
+        const loadingGambar = windowCreated.querySelector("img");
+        if (loadingGambar.complete) {
+            randomPosition(windowCreated);
+            windowCreated.classList.add('modal-visible'); 
+            draggable(windowCreated, ".modal-header", true);
+        } else {
+            loadingGambar.onload = () => {
+                randomPosition(windowCreated);
+                windowCreated.classList.add('modal-visible'); 
+                draggable(windowCreated, ".modal-header", true);
+            };
+        }
     } else {
         centerMobile(windowCreated);
+        windowCreated.classList.add('modal-visible');
     }
     closeBtn(windowCreated);
 }
