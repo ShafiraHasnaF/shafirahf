@@ -183,14 +183,25 @@ function showModal({ imgSrc, width = 600, title = "Preview" }) {
     }
     closeBtn(windowCreated);
 }
+let lastCorner = null;
+
 function randomPosition(win) {
     const container = layerModal;
-    const maxX = container.clientWidth - win.offsetWidth;
-    const maxY = container.clientHeight - win.offsetHeight;
-    const randomX = Math.max(0, Math.random() * maxX);
-    const randomY = Math.max(0, Math.random() * maxY);
-    win.style.left = randomX + "px";
-    win.style.top  = randomY + "px";
+    const pojok = [
+        { x: 20, y: 50 },//kiriatas
+        { x: container.clientWidth - win.offsetWidth - 20, y: 20 },//kananatas
+        { x: 20, y: container.clientHeight - win.offsetHeight - 20 },//kiribawah
+        { x: container.clientWidth - win.offsetWidth - 20, y: container.clientHeight - win.offsetHeight - 20 }//kananbawah
+    ];
+    const tempatKosong = pojok.filter(corner => 
+        corner.x !== lastCorner?.x || corner.y !== lastCorner?.y
+    );
+    const posisiSpawnNext = tempatKosong[Math.floor(Math.random() * tempatKosong.length)];
+    lastCorner = posisiSpawnNext;
+    
+    win.style.left = posisiSpawnNext.x + "px";
+    win.style.top = posisiSpawnNext.y + "px";
+    win.style.transform = "none";
 }
 function centerMobile(win) {
     win.style.left = "50%";
