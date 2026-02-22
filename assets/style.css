@@ -727,6 +727,17 @@ body {
     object-fit: contain;
     user-select: none;
 }
+.modal-newtab {
+    margin-top: 5px;
+    display: flex;
+    justify-content: center;
+}
+.modal-newtab a {
+    text-decoration: none;
+    color: #000;
+    font-size: 0.9em;
+    font-weight: 600;   
+}   
 .modal-close{
     aspect-ratio: 1/1;
     padding: 0 3px;
@@ -951,6 +962,9 @@ body {
     }
     .modal-window.modal-visible {
         transform: scale(1);
+    }
+    .modal-newtab {
+        display: none;
     }
 }
 

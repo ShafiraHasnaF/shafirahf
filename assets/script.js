@@ -153,10 +153,14 @@ function showModal({ imgSrc, width = 600, title = "Preview" }) {
     const windowModal = clone.querySelector(".modal-window");
     const img = clone.querySelector("img");
     const titleEl = clone.querySelector(".modal-title");
+    const newTab = clone.querySelector(".btn-open-newtab");
     img.src = imgSrc;
     titleEl.textContent = title;
     windowModal.style.width = width + "px";
     windowModal.dataset.key = imgSrc;
+    if (newTab) {
+        newTab.href = imgSrc;
+    }
 
     zIdx++;
     windowModal.style.zIndex = zIdx;
