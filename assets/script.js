@@ -288,6 +288,32 @@ document.addEventListener("DOMContentLoaded", () => {
     if (feedbackBtn) {
         feedbackBtn.addEventListener("click", showFeedbackModal);
     }
+
+    //btn close semua mdal
+    const tutupSemuaMdl = document.getElementById("tutupModal");
+    if (tutupSemuaMdl) {
+        tutupSemuaMdl.addEventListener("click", tutupSemuaModal);
+    }
+
+    //suara klik
+    document.addEventListener("click", (e) => {
+        const bisaKlik = 
+            e.target.closest('button') ||
+            e.target.closest('.zoom-icon') ||
+            e.target.closest('.feedback') ||
+            e.target.closest('.nav li') ||
+            e.target.closest('.exp-nav') ||
+            e.target.closest('.btn-reset') ||
+            e.target.closest('.modal-close') ||
+            e.target.closest('#sendFeedback') ||
+            e.target.closest('#unpin') ||
+            e.target.closest('.btn-open-newtab') ||
+            e.target.closest('.cat-btn') ||
+            e.target.closest('.name-trigger') ||
+            e.target.closest('.contact-item');
+        if (bisaKlik) {
+            clickSfx();
+        }});
 }); 
 
 //isi form feedback
@@ -419,4 +445,20 @@ function showFeedbackModal() {
         centerMobile(windowCreated);
         windowCreated.classList.add('modal-visible');
     }
+}
+
+//tutup smua modal dekstop only
+function tutupSemuaModal() {
+    if (!tampilanDesktop()) return;
+    showWindows.forEach(win => {
+        win.remove();
+    })
+    showWindows = [];
+}
+
+//click mp3
+function clickSfx() {
+    const audio = new Audio("assets/mp3/click-sfx.mp3");
+    audio.volume = 0.5;
+    audio.play().catch(() => {});
 }
