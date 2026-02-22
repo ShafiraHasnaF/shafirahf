@@ -749,6 +749,9 @@ body {
 }
 
 /* fromdeedback */
+.fback{
+    max-width: 380px;
+}
 .feedback-form {
     padding: 15px;
     min-width: 350px;
@@ -968,6 +971,10 @@ body {
     }
     .modal-newtab {
         display: none;
+    }    
+    .feedback-form {
+        padding: 15px;
+        min-width: 0;
     }
 }
 
