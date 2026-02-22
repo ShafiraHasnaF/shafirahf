@@ -265,6 +265,7 @@ function draggable(win, handleSelector = null, useZIndex = true) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+    splashScreenMobile();
     // init mainwindow
     // gajadi
     // const mainWindow = document.querySelector(".main-window");
@@ -461,4 +462,19 @@ function clickSfx() {
     const audio = new Audio("assets/mp3/click-sfx.mp3");
     audio.volume = 0.5;
     audio.play().catch(() => {});
+}
+
+//splash screen tampilam nobile
+function splashScreenMobile() {
+    if (!tampilanDesktop()) {
+        const splashScreen = document.getElementById("mobileSplash");
+        if (splashScreen) {
+            setTimeout(() => {
+                splashScreen.classList.add("hide");
+                setTimeout(() => {
+                    splashScreen.style.display = "none";
+                }, 500)
+            }, 3000)
+        }
+    }
 }
