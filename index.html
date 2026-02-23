@@ -23,7 +23,7 @@
 
 <body>
     <!-- splash screen mobile -->
-     <div id="mobileSplash" class="mobile-splash-screen">
+    <div id="mobileSplash" class="mobile-splash-screen">
         <div class="splash-content">
             <h3>Desktop Recommended</h3>
             <p>This site works best on desktop. Please switch to a desktop browser for the full experience.</p>
@@ -31,7 +31,7 @@
                 <span>.</span><span>.</span><span>.</span>
             </div>
         </div>
-     </div>
+    </div>
 
     <main class="desktop">
         <section class="copyright">
@@ -407,7 +407,7 @@
                             <div class="grid4-item l-right">
                                 <div class="last-updated">
                                     <i class="ri-time-line"></i>
-                                    <p>Last updated : 22/02/2026</p>
+                                    <p>Last updated : 23/02/2026</p>
                                 </div>
                                 <button class="btn-reset" id="tutupModal">
                                     Close
@@ -438,10 +438,9 @@
                 </div>
             </div>
         </template>
-        <div class="modal" id="modalLayer"></div>
 
         <!-- modal utk feedback -->
-         <template id="feedbackTemplate">
+        <template id="feedbackTemplate">
             <div class="modal-window fback">
                 <div class="modal-header">
                     <span class="modal-title">Say your opinion abour my website!</span>
@@ -466,6 +465,24 @@
                 </div>
             </div>
         </template>
+
+        <!-- modal easteregg kucung -->
+        <template id="catModalTemplate">
+            <div class="modal-window cat-modal">
+                <div class="modal-header">
+                    <span class="modal-title"></span>
+                    <button class="modal-close">
+                        <i class="ri-close-circle-fill"></i>
+                    </button>
+                </div>
+                <div class="modal-body cat-body">
+                    <img src="" alt="preview"/>
+                    <p>No time spent with a cat is wasted.</p>
+                </div>
+            </div>
+        </template>
+
+        <div class="modal" id="modalLayer"></div>
     </main>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>

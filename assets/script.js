@@ -296,6 +296,18 @@ document.addEventListener("DOMContentLoaded", () => {
         tutupSemuaMdl.addEventListener("click", tutupSemuaModal);
     }
 
+    //btn ucing
+    const catBtn = document.querySelector(".cat-btn");
+    if (catBtn) {
+        catBtn.addEventListener("click", () => {
+            spawnKucing({
+                imgSrc: "assets/img/gato2.png",
+                width: 400,
+                title: "Meow"
+            });
+        });
+    }
+
     //suara klik
     document.addEventListener("click", (e) => {
         const bisaKlik = 
@@ -477,4 +489,60 @@ function splashScreenMobile() {
             }, 3000)
         }
     }
+}
+
+//kuceng
+function spawnKucing({imgSrc, width = 200, title = "Meow"}) {
+    if (!imgSrc) return;
+    const sudahBuka = showWindows.find(win => win.dataset.key === imgSrc);
+    if (sudahBuka) {
+        zIdx++;
+        sudahBuka.style.zIndex = zIdx;
+        console.log("cek modal kucing sudah buka")
+        return;
+    }
+    if (!tampilanDesktop()) {
+        layerModal.innerHTML = "";
+        showWindows = [];
+    }
+    if (tampilanDesktop() && showWindows.length >= 2) {
+        const oldest = showWindows.shift();
+        oldest.remove();
+    }
+    const template = document.getElementById("catModalTemplate");
+    const clone = template.content.cloneNode(true);
+    
+    const windowModal = clone.querySelector(".modal-window");
+    const img = clone.querySelector("img");
+    const titleEl = clone.querySelector(".modal-title");
+    
+    img.src = imgSrc;
+    titleEl.textContent = title;
+    windowModal.style.width = width + "px";
+    windowModal.dataset.key = imgSrc;
+
+    zIdx++;
+    windowModal.style.zIndex = zIdx;
+    layerModal.appendChild(clone);
+    const windowCreated = layerModal.lastElementChild;
+    showWindows.push(windowCreated);
+    
+    if (tampilanDesktop()) {
+        const loadingGambar = windowCreated.querySelector("img");
+        if (loadingGambar.complete) {
+            randomPosition(windowCreated);
+            windowCreated.classList.add('modal-visible'); 
+            draggable(windowCreated, ".modal-header", true);
+        } else {
+            loadingGambar.onload = () => {
+                randomPosition(windowCreated);
+                windowCreated.classList.add('modal-visible'); 
+                draggable(windowCreated, ".modal-header", true);
+            };
+        }
+    } else {
+        centerMobile(windowCreated);
+        windowCreated.classList.add('modal-visible');
+    }
+    closeBtn(windowCreated);
 }
