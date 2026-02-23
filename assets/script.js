@@ -407,8 +407,10 @@ function showFeedbackModal() {
         event.preventDefault();
         const message = feedbackMsg.value;
         const fromSender = namaSender ? namaSender.value : "anonymous";
+        const alert = windowCreated.querySelector(".feedback-alert")
         if (!message.trim()) {
-            alert("message field empty...");
+            alert.textContent = "message field empty...";
+            alert.className = "feedback-alert show error";
             return;
         }
         btnSend.disabled = true;
@@ -436,9 +438,12 @@ function showFeedbackModal() {
                 "message sent! go touch some grass now ;D",
                 "thanks, stranger!",
             ];
-            alert(responses[Math.floor(Math.random() * responses.length)]);
-            windowCreated.remove();
-            showWindows = showWindows.filter(w => w !== windowCreated);
+            alert.textContent = responses[Math.floor(Math.random() * responses.length)];
+            alert.className = "feedback-alert show success";
+            setTimeout(() => {
+                windowCreated.remove();
+                showWindows = showWindows.filter(w => w !== windowCreated);
+            }, 5000);
         })
         .catch(error => {
             console.error("Error:", error);
@@ -448,7 +453,8 @@ function showFeedbackModal() {
                 "fira's in another dimension, try again...",
                 "spicy chili burned the server, please retry..."
             ];
-            alert(errorMessages[Math.floor(Math.random()*errorMessages.length)]);
+            alert.textContent = errorMessages[Math.floor(Math.random() * errorMessages.length)];
+            alert.className = "feedback-alert show error";
         })
         .finally(() => {
             btnSend.disabled = false;
