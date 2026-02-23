@@ -20,7 +20,7 @@ a retro-styled personal website with draggable windows, referenced by old window
 - [Matter.js](https://brm.io/matter-js/)
 
 ## SCREENSHOTS
-<p align="center"><img src="doc/modal.png" alt="Desktop View" width="600"></p>
+<p align="center"><img src="doc/desktop.png" alt="Desktop View" width="600"></p>
 
 <p align="center"><img src="doc/mobile.png" alt="Mobile View" width="600"></p>
 
