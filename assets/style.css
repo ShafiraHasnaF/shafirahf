@@ -1,13 +1,13 @@
 /* custom root */
 :root {
-    --bg-dark: hsl(0, 0%, 11%);
-    --window: hsl(0, 0%, 66%);
+    --bg-dark: hsl(0, 0%, 10%);
+    --window: hsl(210, 8%, 68%);
     --window-2: hsl(0, 0%, 78%);
     --grid: hsl(0, 0%, 95%);
     --font-jersey: "Jersey 10", sans-serif;
     --font-quicksand: "Quicksand", sans-serif;
     --font-anaheim: "Anaheim", sans-serif;
-    ;
+    --header-color: hsl(220, 13%, 26%);
     --shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
 
@@ -225,15 +225,16 @@ body {
 }
 
 .grid-1 .nav li.active {
-    background: hsl(0, 0%, 80%);
-    box-shadow: inset 2px 2px 0 #808080;
+    background: var(--header-color);
+    box-shadow: inset 2px 2px 0 #0c0f1a;
+    color: #fff;
 }
 
 /* grid2 */
 .grid-2 {
     display: grid;
     grid-template-rows: 8% 92%;
-    background-color: var(--window-2);
+    background: var(--header-color);
     border-width: 1px 3px 2px 1px;
 }
 
@@ -273,7 +274,7 @@ body {
     justify-content: space-between;
     padding-top: .4rem;
     font-family: var(--font-jersey);
-    color: hsl(0, 0%, 18%);
+    color: #fff
 }
 
 .grid-2 .sm-grid:nth-child(1) .header p {
@@ -757,9 +758,10 @@ body {
     display: flex;
     justify-content: space-between;
     padding: 6px;
-    background: var(--window);
+    background: var(--header-color);
+    color: #fff;
     border-bottom: 3px solid #000;
-    box-shadow: inset -2px -2px 0 #fff;
+    box-shadow: inset -2px -2px 0 #c3c4ff;
     user-select: none;
 }
 .modal-header .modal-title{
@@ -925,8 +927,9 @@ body {
     }
 
     .grid-1 .nav li.active {
-        background: hsl(0, 0%, 80%);
-        box-shadow: inset 2px 2px 0 #808080;
+        background: var(--header-color);
+        box-shadow: inset 2px 2px 0 #0c0f1a;
+        color: #fff;
     }
 
     /* grid2 */
