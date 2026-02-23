@@ -1,4 +1,4 @@
-//teks pojok kiriatas
+//teks pojok kiriatas==================================================================================================================================================================================================================================
 const text = "C:/Users/Visitor>";
 const textSpeed = 200;
 const textDelay = 6000;
@@ -20,7 +20,7 @@ function mengetik() {
 }
 mengetik();
 
-//nav 
+//nav ==================================================================================================================================================================================================================================
 const navItems = document.querySelectorAll(".nav li");
 const sections = document.querySelectorAll(".content-section");
 navItems.forEach(item => {
@@ -37,7 +37,7 @@ navItems.forEach(item => {
     });
 });
 
-// matterjs 
+// matterjs ==================================================================================================================================================================================================================================
 const { Engine, World, Bodies, Events } = Matter;
 const btn = document.getElementById("unpin");
 const wrapper = document.querySelector(".tools-wrapper");
@@ -124,7 +124,7 @@ btn.addEventListener("click", () => {
     }
 });
 
-// STRESS DRAGGABLE ASDKJADKJSA
+// STRESS DRAGGABLE ASDKJADKJSA==================================================================================================================================================================================================================================
 const layerModal = document.getElementById("modalLayer");
 const templateFeedback = document.getElementById("modalTemplate");
 const tampilanDesktop = () => window.matchMedia("(min-width: 769px)").matches;
@@ -194,7 +194,8 @@ function randomPosition(win) {
         { x: 20, y: 50 },//kiriatas
         { x: container.clientWidth - win.offsetWidth - 20, y: 20 },//kananatas
         { x: 20, y: container.clientHeight - win.offsetHeight - 20 },//kiribawah
-        { x: container.clientWidth - win.offsetWidth - 20, y: container.clientHeight - win.offsetHeight - 20 }//kananbawah
+        { x: container.clientWidth - win.offsetWidth - 20, 
+            y: container.clientHeight - win.offsetHeight - 20 }//kananbawah
     ];
     const tempatKosong = pojok.filter(corner => 
         corner.x !== lastCorner?.x || corner.y !== lastCorner?.y
@@ -264,6 +265,7 @@ function draggable(win, handleSelector = null, useZIndex = true) {
     });
 }
 
+//dom==================================================================================================================================================================================================================================
 document.addEventListener("DOMContentLoaded", () => {
     splashScreenMobile();
     // init mainwindow
@@ -283,20 +285,31 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
     });
-
-    // btn feedback
+    document.querySelectorAll(".name-trigger").forEach(icon => {
+        icon.addEventListener("click", () => {
+            const nameTrig = icon.closest(".name-trigger");
+            if (!nameTrig) return;
+            showModal({
+                imgSrc: nameTrig.dataset.img,
+                width: Number(nameTrig.dataset.width || 600),
+                title: nameTrig.dataset.title
+            });
+        });
+    });
+    
+    // btn feedback==================================================================================================================================================================================================================================
     const feedbackBtn = document.querySelector(".feedback");
     if (feedbackBtn) {
         feedbackBtn.addEventListener("click", showFeedbackModal);
     }
 
-    //btn close semua mdal
+    //btn close semua mdal==================================================================================================================================================================================================================================
     const tutupSemuaMdl = document.getElementById("tutupModal");
     if (tutupSemuaMdl) {
         tutupSemuaMdl.addEventListener("click", tutupSemuaModal);
     }
 
-    //btn ucing
+    //btn ucing==================================================================================================================================================================================================================================
     const catBtn = document.querySelector(".cat-btn");
     if (catBtn) {
         catBtn.addEventListener("click", () => {
@@ -308,7 +321,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    //suara klik
+    //suara klik==================================================================================================================================================================================================================================
     document.addEventListener("click", (e) => {
         const bisaKlik = 
             e.target.closest('button') ||
@@ -329,7 +342,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }});
 }); 
 
-//isi form feedback
+//isi form feedback==================================================================================================================================================================================================================================
 const randomNames = [
     "Hungry Mammoth",
     "Moldy Rice", 
@@ -460,7 +473,7 @@ function showFeedbackModal() {
     }
 }
 
-//tutup smua modal dekstop only
+//tutup smua modal dekstop only==================================================================================================================================================================================================================================
 function tutupSemuaModal() {
     if (!tampilanDesktop()) return;
     showWindows.forEach(win => {
@@ -469,14 +482,14 @@ function tutupSemuaModal() {
     showWindows = [];
 }
 
-//click mp3
+//click mp3==================================================================================================================================================================================================================================
 function clickSfx() {
     const audio = new Audio("assets/mp3/click-sfx.mp3");
     audio.volume = 0.5;
     audio.play().catch(() => {});
 }
 
-//splash screen tampilam nobile
+//splash screen tampilam nobile ==================================================================================================================================================================================================================================
 function splashScreenMobile() {
     if (!tampilanDesktop()) {
         const splashScreen = document.getElementById("mobileSplash");
@@ -491,7 +504,7 @@ function splashScreenMobile() {
     }
 }
 
-//kuceng
+//kuceng ==================================================================================================================================================================================================================================
 function spawnKucing({imgSrc, width = 200, title = "Meow"}) {
     if (!imgSrc) return;
     const sudahBuka = showWindows.find(win => win.dataset.key === imgSrc);
