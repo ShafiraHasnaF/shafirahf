@@ -276,7 +276,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // }
     document.querySelectorAll(".zoom-icon").forEach(icon => {
         icon.addEventListener("click", () => {
-            const expItem = icon.closest(".exp-item");
+            const expItem = icon.closest(".exp-item, .exp-org");
             if (!expItem) return;
             showModal({
                 imgSrc: expItem.dataset.img,
