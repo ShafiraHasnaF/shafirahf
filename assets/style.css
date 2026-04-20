@@ -558,6 +558,10 @@ body {
     flex-wrap: wrap;
 }
 
+.exp-b{
+    font-weight: 600;
+}
+
 .exp-nav-item {
     text-decoration: none;
     color: var(--window-2);
