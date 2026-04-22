@@ -679,6 +679,7 @@ body {
     display: flex;
     align-items: center;
     flex-direction: column;
+    margin-top: 5px;
 }
 
 .grid4-item:first-child {
@@ -690,6 +691,7 @@ body {
     min-width: 0;
     flex-direction: row;
     gap: 2em;
+    justify-content: space-between;
 }
 
 .feedback{
@@ -1069,6 +1071,9 @@ body {
         font-size: 1em;
         font-family: var(--font-jersey);
         letter-spacing: 1px;
+    }
+    .grid4-item{
+        margin-top: 0;
     }
     .grid4-item button {
         display: none;
