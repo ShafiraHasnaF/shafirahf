@@ -24,7 +24,7 @@ a retro-styled personal website with draggable windows, referenced by old window
 
 <p align="center"><img src="doc/mobile.png" alt="Mobile View" width="600"></p>
 
-your feedback helps me improve! Whether it's bug reports, feature suggestions or questions about the code. Please use the feedback form or GitHub Issues.
+your feedback helps me improve! Whether it's bug reports, feature suggestions or questions about the code. 
 
 thanks for visiting! 😉
 
