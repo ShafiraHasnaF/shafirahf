@@ -343,141 +343,141 @@ document.addEventListener("DOMContentLoaded", () => {
 }); 
 
 //isi form feedback==================================================================================================================================================================================================================================
-const randomNames = [
-    "Hungry Mammoth",
-    "Moldy Rice", 
-    "Rotten Egg",
-    "Cute Duck",
-    "Sleepy Sloth",
-    "Crazy Cat",
-    "Lazy Dog",
-    "Spicy Chili",
-    "Sour Candy",
-    "Burnt Toast",
-    "Calico Cat",
-    "Expired Candy",
-    "Stinky Cookie",
-    "Crying Banana",
-    "Rainbow Donught"
-];
-const urlsheetbest = "https://api.sheetbest.com/sheets/62266709-66e1-47c5-b91b-c13e6f177d61";
-function showFeedbackModal() {
-    const feedbackSudahBuka = showWindows.find(win => win.classList.contains("feedback-modal"));
-    if (feedbackSudahBuka) {
-        zIdx++;
-        feedbackSudahBuka.style.zIndex = zIdx;
-        console.log("cek modal sudah dibuka");
-        return;
-    }
-    const templateFeedback = document.getElementById("feedbackTemplate");
-    const clone = templateFeedback.content.cloneNode(true);
-    const windowModal = clone.querySelector(".modal-window");
-    windowModal.classList.add("feedback-modal");
+// const randomNames = [
+//     "Hungry Mammoth",
+//     "Moldy Rice", 
+//     "Rotten Egg",
+//     "Cute Duck",
+//     "Sleepy Sloth",
+//     "Crazy Cat",
+//     "Lazy Dog",
+//     "Spicy Chili",
+//     "Sour Candy",
+//     "Burnt Toast",
+//     "Calico Cat",
+//     "Expired Candy",
+//     "Stinky Cookie",
+//     "Crying Banana",
+//     "Rainbow Donught"
+// ];
+// const urlsheetbest = "https://api.sheetbest.com/sheets/62266709-66e1-47c5-b91b-c13e6f177d61";
+// function showFeedbackModal() {
+//     const feedbackSudahBuka = showWindows.find(win => win.classList.contains("feedback-modal"));
+//     if (feedbackSudahBuka) {
+//         zIdx++;
+//         feedbackSudahBuka.style.zIndex = zIdx;
+//         console.log("cek modal sudah dibuka");
+//         return;
+//     }
+//     const templateFeedback = document.getElementById("feedbackTemplate");
+//     const clone = templateFeedback.content.cloneNode(true);
+//     const windowModal = clone.querySelector(".modal-window");
+//     windowModal.classList.add("feedback-modal");
 
-    const randomName = randomNames[Math.floor(Math.random() * randomNames.length)];
-    const sender = clone.querySelector(".random-name");
-    if (sender) sender.value = randomName;
+//     const randomName = randomNames[Math.floor(Math.random() * randomNames.length)];
+//     const sender = clone.querySelector(".random-name");
+//     if (sender) sender.value = randomName;
     
-    const closeBtn = clone.querySelector(".modal-close");
-    closeBtn.addEventListener("click", () => {
-        windowModal.remove();
-        showWindows = showWindows.filter(w => w !== windowModal);
-    });
+//     const closeBtn = clone.querySelector(".modal-close");
+//     closeBtn.addEventListener("click", () => {
+//         windowModal.remove();
+//         showWindows = showWindows.filter(w => w !== windowModal);
+//     });
     
-    // modal spawn dulu -> cari eleemen
-    zIdx++;
-    windowModal.style.zIndex = zIdx;
-    layerModal.appendChild(clone);
-    const windowCreated = layerModal.lastElementChild;
-    showWindows.push(windowCreated);
-    const btnSend = windowCreated.querySelector("#sendFeedback");
-    const feedbackMsg = windowCreated.querySelector(".feedback-message");
-    const namaSender = windowCreated.querySelector(".random-name");
-    windowCreated.querySelector(".feedback-message")?.focus();
+//     // modal spawn dulu -> cari eleemen
+//     zIdx++;
+//     windowModal.style.zIndex = zIdx;
+//     layerModal.appendChild(clone);
+//     const windowCreated = layerModal.lastElementChild;
+//     showWindows.push(windowCreated);
+//     const btnSend = windowCreated.querySelector("#sendFeedback");
+//     const feedbackMsg = windowCreated.querySelector(".feedback-message");
+//     const namaSender = windowCreated.querySelector(".random-name");
+//     windowCreated.querySelector(".feedback-message")?.focus();
     
-    console.log("btn send:", btnSend);
-    console.log("pesan:", feedbackMsg);
-    console.log("sender:", namaSender);
-    if (!btnSend || !feedbackMsg) {
-        console.error("hilang");
-        return;
-    }
+//     console.log("btn send:", btnSend);
+//     console.log("pesan:", feedbackMsg);
+//     console.log("sender:", namaSender);
+//     if (!btnSend || !feedbackMsg) {
+//         console.error("hilang");
+//         return;
+//     }
     
-    btnSend.addEventListener("click", function(event) {
-        event.preventDefault();
-        const message = feedbackMsg.value;
-        const fromSender = namaSender ? namaSender.value : "anonymous";
-        const alert = windowCreated.querySelector(".feedback-alert")
-        if (!message.trim()) {
-            alert.textContent = "message field empty...";
-            alert.className = "feedback-alert show error";
-            return;
-        }
-        btnSend.disabled = true;
-        const textAwal = btnSend.innerHTML;
-        btnSend.innerHTML = 'Sending <i class="ri-loader-4-line"></i>';
+//     btnSend.addEventListener("click", function(event) {
+//         event.preventDefault();
+//         const message = feedbackMsg.value;
+//         const fromSender = namaSender ? namaSender.value : "anonymous";
+//         const alert = windowCreated.querySelector(".feedback-alert")
+//         if (!message.trim()) {
+//             alert.textContent = "message field empty...";
+//             alert.className = "feedback-alert show error";
+//             return;
+//         }
+//         btnSend.disabled = true;
+//         const textAwal = btnSend.innerHTML;
+//         btnSend.innerHTML = 'Sending <i class="ri-loader-4-line"></i>';
 
-        fetch(urlsheetbest, {
-            method: "POST",
-            mode: "cors",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify([{
-                from: fromSender,
-                message: message,
-                timestamp: new Date().toLocaleString('id-ID')
-            }])
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log("jos:", data);
-            const responses = [
-                "delivered. thank u!",
-                "done! time to grab a coffee...",
-                "message sent! go touch some grass now ;D",
-                "thanks, stranger!",
-            ];
-            alert.textContent = responses[Math.floor(Math.random() * responses.length)];
-            alert.className = "feedback-alert show success";
-            setTimeout(() => {
-                windowCreated.remove();
-                showWindows = showWindows.filter(w => w !== windowCreated);
-            }, 5000);
-        })
-        .catch(error => {
-            console.error("Error:", error);
-            const errorMessages = [
-                "fira's sleeping, try again later...",
-                "wild moldy rice ate your message, please retry...",
-                "fira's in another dimension, try again...",
-                "spicy chili burned the server, please retry..."
-            ];
-            alert.textContent = errorMessages[Math.floor(Math.random() * errorMessages.length)];
-            alert.className = "feedback-alert show error";
-        })
-        .finally(() => {
-            btnSend.disabled = false;
-            btnSend.innerHTML = textAwal;
-        })
-    });
-    if (tampilanDesktop()) {
-        // randomPosition(windowCreated);
+//         fetch(urlsheetbest, {
+//             method: "POST",
+//             mode: "cors",
+//             headers: {
+//                 "Content-Type": "application/json"
+//             },
+//             body: JSON.stringify([{
+//                 from: fromSender,
+//                 message: message,
+//                 timestamp: new Date().toLocaleString('id-ID')
+//             }])
+//         })
+//         .then(response => response.json())
+//         .then(data => {
+//             console.log("jos:", data);
+//             const responses = [
+//                 "delivered. thank u!",
+//                 "done! time to grab a coffee...",
+//                 "message sent! go touch some grass now ;D",
+//                 "thanks, stranger!",
+//             ];
+//             alert.textContent = responses[Math.floor(Math.random() * responses.length)];
+//             alert.className = "feedback-alert show success";
+//             setTimeout(() => {
+//                 windowCreated.remove();
+//                 showWindows = showWindows.filter(w => w !== windowCreated);
+//             }, 5000);
+//         })
+//         .catch(error => {
+//             console.error("Error:", error);
+//             const errorMessages = [
+//                 "fira's sleeping, try again later...",
+//                 "wild moldy rice ate your message, please retry...",
+//                 "fira's in another dimension, try again...",
+//                 "spicy chili burned the server, please retry..."
+//             ];
+//             alert.textContent = errorMessages[Math.floor(Math.random() * errorMessages.length)];
+//             alert.className = "feedback-alert show error";
+//         })
+//         .finally(() => {
+//             btnSend.disabled = false;
+//             btnSend.innerHTML = textAwal;
+//         })
+//     });
+//     if (tampilanDesktop()) {
+//         // randomPosition(windowCreated);
 
-        const container = layerModal;
-        const posisiKiri = (container.clientWidth / 2) - (windowCreated.offsetWidth / 2);
-        const posisiAtas = (container.clientHeight / 2) - (windowCreated.offsetHeight / 2);
-        windowCreated.style.left = Math.max(0, posisiKiri) + "px";
-        windowCreated.style.top = Math.max(0, posisiAtas) + "px";
-        windowCreated.style.transform = "none";
+//         const container = layerModal;
+//         const posisiKiri = (container.clientWidth / 2) - (windowCreated.offsetWidth / 2);
+//         const posisiAtas = (container.clientHeight / 2) - (windowCreated.offsetHeight / 2);
+//         windowCreated.style.left = Math.max(0, posisiKiri) + "px";
+//         windowCreated.style.top = Math.max(0, posisiAtas) + "px";
+//         windowCreated.style.transform = "none";
 
-        windowCreated.classList.add('modal-visible');
-        draggable(windowCreated, ".modal-header", true);
-    } else {
-        centerMobile(windowCreated);
-        windowCreated.classList.add('modal-visible');
-    }
-}
+//         windowCreated.classList.add('modal-visible');
+//         draggable(windowCreated, ".modal-header", true);
+//     } else {
+//         centerMobile(windowCreated);
+//         windowCreated.classList.add('modal-visible');
+//     }
+// }
 
 //tutup smua modal dekstop only==================================================================================================================================================================================================================================
 function tutupSemuaModal() {
